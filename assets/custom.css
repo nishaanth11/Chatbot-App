@@ -1,0 +1,16 @@
+/* ...existing code... */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: url("file:///c:/Users/snish/Downloads/AI%20Project/assets/f1-bg.jpg") center / cover no-repeat fixed;
+  opacity: 0.12;
+  pointer-events: none;
+}
+/* ensure UI content stays above the background */
+.monaco-workbench, .part, .monaco-editor, .editor-instance {
+  position: relative;
+  z-index: 1;
+}
+/* ...existing code... */
