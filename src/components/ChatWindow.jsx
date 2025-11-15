@@ -12,7 +12,7 @@ const ChatWindow = () => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [copiedMessageId, setCopiedMessageId] = useState(null);
+  const [, setCopiedMessageId] = useState(null);
   const [systemPrompt] = useState("You are an F1 racing expert and enthusiast AI assistant. You have deep knowledge of Formula 1 racing, drivers, teams, circuits, race strategies, technical regulations, and F1 history. Provide engaging, accurate, and passionate responses about all things Formula 1. Use F1 terminology naturally and share your enthusiasm for the sport.");
 
   // Load messages from localStorage on mount

@@ -23,17 +23,19 @@ class AzureOpenAIService {
     try {
       const { apiKey, endpoint, deploymentName, apiVersion } = config.azureOpenAI;
 
-      // Debug: Log configuration (without exposing full API key)
-      console.log("=== Azure OpenAI Client Initialization ===");
-      console.log("Config values received:", {
-        hasApiKey: !!apiKey,
-        hasEndpoint: !!endpoint,
-        hasDeployment: !!deploymentName,
-        endpoint: endpoint,
-        deployment: deploymentName,
-        apiVersion: apiVersion,
-        apiKeyLength: apiKey ? apiKey.length : 0
-      });
+      // Debug: Log configuration (only in development, without exposing full API key)
+      if (process.env.NODE_ENV === 'development') {
+        console.log("=== Azure OpenAI Client Initialization ===");
+        console.log("Config values received:", {
+          hasApiKey: !!apiKey,
+          hasEndpoint: !!endpoint,
+          hasDeployment: !!deploymentName,
+          endpoint: endpoint,
+          deployment: deploymentName,
+          apiVersion: apiVersion,
+          apiKeyLength: apiKey ? apiKey.length : 0
+        });
+      }
 
       // Validate configuration
       if (!apiKey || !endpoint || !deploymentName) {
@@ -49,11 +51,13 @@ class AzureOpenAIService {
       // Normalize endpoint (remove trailing slash if present)
       const normalizedEndpoint = endpoint.endsWith('/') ? endpoint.slice(0, -1) : endpoint;
       
-      console.log("Creating Azure OpenAI client with:", {
-        endpoint: normalizedEndpoint,
-        deployment: deploymentName,
-        apiVersion: apiVersion || "2024-02-15-preview"
-      });
+      if (process.env.NODE_ENV === 'development') {
+        console.log("Creating Azure OpenAI client with:", {
+          endpoint: normalizedEndpoint,
+          deployment: deploymentName,
+          apiVersion: apiVersion || "2024-02-15-preview"
+        });
+      }
 
       // Create client with Azure credentials
       // Note: dangerouslyAllowBrowser is required for browser environments
@@ -66,8 +70,10 @@ class AzureOpenAIService {
         dangerouslyAllowBrowser: true
       });
       
-      console.log("✅ Azure OpenAI client initialized successfully");
-      console.log("=== End Client Initialization ===");
+      if (process.env.NODE_ENV === 'development') {
+        console.log("✅ Azure OpenAI client initialized successfully");
+        console.log("=== End Client Initialization ===");
+      }
     } catch (error) {
       console.error("❌ Failed to initialize Azure OpenAI client:", error);
       console.error("Error details:", {
@@ -82,12 +88,14 @@ class AzureOpenAIService {
   validateConfig() {
     const { apiKey, endpoint, deploymentName } = config.azureOpenAI;
     
-    console.log("Validating configuration...", {
-      hasApiKey: !!apiKey,
-      hasEndpoint: !!endpoint,
-      hasDeployment: !!deploymentName,
-      hasClient: !!this.client
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.log("Validating configuration...", {
+        hasApiKey: !!apiKey,
+        hasEndpoint: !!endpoint,
+        hasDeployment: !!deploymentName,
+        hasClient: !!this.client
+      });
+    }
     
     if (!apiKey || apiKey === "your_api_key_here") {
       throw new Error("Azure OpenAI API key is not configured. Please check your .env file and restart the server.");
@@ -209,5 +217,6 @@ class AzureOpenAIService {
 }
 
 // Export singleton instance
-export default new AzureOpenAIService();
+const azureOpenAIService = new AzureOpenAIService();
+export default azureOpenAIService;
 
