@@ -1,11 +1,21 @@
-/* global background */
+/* global background image for the whole workbench */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 0 !important;
   background: url("file:///c:/Users/snish/Downloads/AI%20Project/assets/f1-bg.jpg") center / cover no-repeat fixed;
-  opacity: 0.12 !important;
+  opacity: 0.16 !important;
+  pointer-events: none !important;
+}
+
+/* translucent overlay for readability */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1 !important;
+  background: linear-gradient(rgba(6,6,8,0.16), rgba(6,6,8,0.22));
   pointer-events: none !important;
 }
 
