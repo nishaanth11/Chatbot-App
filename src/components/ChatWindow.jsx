@@ -173,7 +173,7 @@ const ChatWindow = () => {
   return (
     <div className="chat-window">
       <div className="chat-header">
-        <h1 className="chat-title">🏎️ F1 Racing Chatbot</h1>
+        <h1 className="chat-title">🏎️ F1 CHATBOT</h1>
         <div className="chat-actions">
           {messages.length > 0 && (
             <>
@@ -184,7 +184,7 @@ const ChatWindow = () => {
                 aria-label="Regenerate last response"
                 title="Regenerate last response"
               >
-                🔄 Regenerate
+                ⚡ PIT STOP
               </button>
               <button
                 className="action-button"
@@ -193,7 +193,7 @@ const ChatWindow = () => {
                 aria-label="Export chat history"
                 title="Export chat history"
               >
-                💾 Export
+                📊 EXPORT TELEMETRY
               </button>
               <button
                 className="action-button danger"
@@ -202,7 +202,7 @@ const ChatWindow = () => {
                 aria-label="Clear chat history"
                 title="Clear chat history"
               >
-                🗑️ Clear
+                🏁 CLEAR TRACK
               </button>
             </>
           )}
