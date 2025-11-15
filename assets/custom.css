@@ -1,16 +1,74 @@
-/* ...existing code... */
+/* global background */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: 0 !important;
   background: url("file:///c:/Users/snish/Downloads/AI%20Project/assets/f1-bg.jpg") center / cover no-repeat fixed;
-  opacity: 0.12;
-  pointer-events: none;
+  opacity: 0.12 !important;
+  pointer-events: none !important;
 }
+
+/* place UI above the background */
+.monaco-workbench,
+.part,
+.panel,
+.sidebar,
+.activitybar,
+.monaco-editor,
+.webview,
+.webview-contents,
+.webview-panel {
+  background: transparent !important;
+  background-color: transparent !important;
+  z-index: 1 !important;
+}
+
+/* make common overlays slightly opaque for readability */
+.monaco-workbench .part.titlebar,
+.monaco-workbench .part.statusbar,
+.monaco-panel,
+.title,
+.monaco-editor .margin {
+  background-color: rgba(0,0,0,0.35) !important;
+}
+
+/* webview wrapper (try to reach chat webview) */
+.webview-panel .webview-contents::before,
+.webview-contents::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0 !important;
+  background: transparent !important;
+  pointer-events: none !important;
+}
+
+/* make main UI backgrounds transparent so the image shows through */
+.monaco-workbench,
+.part,
+.monaco-workbench .part,
+.monaco-editor,
+.editor-instance,
+.monaco-workbench .part.editor,
+.monaco-workbench .part.panel,
+.monaco-workbench .part.sidebar {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+/* keep overlays, dialogs and text readable */
+.monaco-workbench .monaco-shell, 
+.monaco-workbench .part.titlebar,
+.monaco-workbench .part.statusbar,
+.monaco-workbench .action-bar,
+.monaco-editor .margin, 
+.monaco-editor .inputarea {
+  background-color: rgba(0,0,0,0.35) !important;
+}
+
 /* ensure UI content stays above the background */
 .monaco-workbench, .part, .monaco-editor, .editor-instance {
   position: relative;
   z-index: 1;
 }
-/* ...existing code... */
