@@ -80,9 +80,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-  background-attachment: fixed;
   color: var(--text-primary, #ffffff);
+  min-height: 100vh;
 }
 
 code {
@@ -97,9 +96,11 @@ code {
   flex-direction: column;
   overflow: hidden;
   position: relative;
+  animation: fadeInApp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, transform;
 }
 
-/* Subtle F1 background pattern - professional */
+/* Subtle F1 background pattern - professional with smooth animation */
 .App::before {
   content: '';
   position: fixed;
@@ -111,7 +112,29 @@ code {
     radial-gradient(circle at 20% 50%, rgba(225, 6, 0, 0.015) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(225, 6, 0, 0.015) 0%, transparent 50%);
   pointer-events: none;
-  z-index: 0;
+  z-index: -1;
+  animation: backgroundPulse 8s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes fadeInApp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes backgroundPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
 }
 
 /* Scrollbar styling - F1 themed */

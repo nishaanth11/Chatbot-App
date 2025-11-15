@@ -5,12 +5,26 @@
   height: 100vh;
   width: 100%;
   margin: 0;
-  background: var(--bg-primary, #0a0a0a);
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(2px);
   box-shadow: 0 0 30px rgba(225, 6, 0, 0.3);
   border-left: 3px solid var(--primary-color, #E10600);
   border-right: 3px solid var(--primary-color, #E10600);
   position: relative;
   overflow: hidden;
+  animation: slideInWindow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+@keyframes slideInWindow {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
 }
 
 /* Subtle racing stripes background - professional */
@@ -81,6 +95,19 @@
   position: relative;
   overflow: hidden;
   z-index: 10;
+  animation: slideDownHeader 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+@keyframes slideDownHeader {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 /* Subtle racing stripe at top - professional */
@@ -150,22 +177,54 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   gap: 4px;
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+}
+
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(225, 6, 0, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: 0;
+}
+
+.action-button:hover:not(:disabled)::before {
+  width: 300px;
+  height: 300px;
 }
 
 .action-button:hover:not(:disabled) {
   background: var(--button-hover, #2a2a2a);
   border-color: var(--primary-color, #E10600);
-  box-shadow: 0 0 8px rgba(225, 6, 0, 0.3);
-  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(225, 6, 0, 0.4), 0 0 20px rgba(225, 6, 0, 0.2);
+  transform: translate3d(0, -2px, 0) scale(1.02);
+}
+
+.action-button:active:not(:disabled) {
+  transform: translate3d(0, 0, 0) scale(0.98);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .action-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.action-button > * {
+  position: relative;
+  z-index: 1;
 }
 
 .action-button.danger:hover:not(:disabled) {
@@ -182,7 +241,8 @@
   background: var(--error-bg, #fff3cd);
   border-bottom: 1px solid var(--error-border, #ffc107);
   color: var(--error-text, #856404);
-  animation: slideDown 0.3s ease-out;
+  animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
 }
 
 .error-icon {
@@ -232,11 +292,11 @@
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translate3d(0, -20px, 0);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 }
 

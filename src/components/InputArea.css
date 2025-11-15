@@ -5,6 +5,19 @@
   padding: 20px 40px;
   position: relative;
   z-index: 10;
+  animation: slideUpInput 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+@keyframes slideUpInput {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
 /* Subtle checkered flag pattern at top of input area */
@@ -45,13 +58,15 @@
   overflow-y: auto;
   background: var(--input-field-bg, #f8f9fa);
   color: var(--input-text, #212529);
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow, border-color;
 }
 
 .message-input:focus {
   outline: none;
   border-color: var(--primary-color, #E10600);
-  box-shadow: 0 0 0 3px rgba(225, 6, 0, 0.2), 0 0 15px rgba(225, 6, 0, 0.3);
+  box-shadow: 0 0 0 4px rgba(225, 6, 0, 0.15), 0 0 20px rgba(225, 6, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translate3d(0, -1px, 0);
 }
 
 .message-input:disabled {
@@ -77,19 +92,47 @@
   justify-content: center;
   font-size: 18px;
   font-weight: bold;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
   box-shadow: 0 0 8px rgba(225, 6, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  will-change: transform, box-shadow;
+}
+
+.send-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  z-index: 0;
+}
+
+.send-button:hover:not(:disabled)::before {
+  width: 200px;
+  height: 200px;
 }
 
 .send-button:hover:not(:disabled) {
   background: var(--primary-hover, #C10500);
-  transform: scale(1.05);
-  box-shadow: 0 0 12px rgba(225, 6, 0, 0.5);
+  transform: scale3d(1.1, 1.1, 1) rotate(5deg);
+  box-shadow: 0 0 20px rgba(225, 6, 0, 0.6), 0 4px 16px rgba(225, 6, 0, 0.4);
 }
 
 .send-button:active:not(:disabled) {
-  transform: scale(0.95);
+  transform: scale3d(0.9, 0.9, 1) rotate(-5deg);
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.send-button > * {
+  position: relative;
+  z-index: 1;
 }
 
 .send-button:disabled {
@@ -99,7 +142,8 @@
 }
 
 .loading-spinner {
-  animation: spin 1s linear infinite;
+  animation: spinSmooth 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  will-change: transform;
 }
 
 .input-help {
@@ -107,14 +151,24 @@
   font-size: 12px;
   color: var(--text-secondary, #666);
   text-align: center;
+  animation: fadeIn 0.5s ease-in 0.3s both;
 }
 
-@keyframes spin {
+@keyframes spinSmooth {
   from {
-    transform: rotate(0deg);
+    transform: rotate3d(0, 0, 1, 0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
